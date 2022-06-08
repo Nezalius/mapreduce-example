@@ -1,11 +1,5 @@
-/*
-* Author Chris Baumann
-*/
-
-
+/// Author Chris Baumann
 use std::thread;
-
-
 
 struct WordCount {
     word_string: String,
@@ -13,12 +7,10 @@ struct WordCount {
 }
 
 
-
 fn read_file(filename: String) -> String {
     let contents_of_file: String = std::fs::read_to_string(filename).expect("Something went wrong");
     contents_of_file
 }
-
 
 fn divide_string_to_vec(text: String) -> Vec<String> {
     let mut all_words: Vec<&str> = text.split_whitespace().collect();
