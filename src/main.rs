@@ -29,14 +29,14 @@ fn divide_string_to_vec(text: String) -> Vec<String> {
     all_words_string
 }
 
-fn divide_for_threading(text:&mut Vec<String>, amount_of_threads: usize) -> Vec<Vec<String>> {
-    let words_per_sublist: usize = 0;
-    if amount_of_threads == 15 {
-        amount_of_threads = 10;
-        words_per_sublist = text.len() / amount_of_threads + 1;
+fn divide_for_threading(text:&mut Vec<String>, amount_of_threads: &mut usize) -> Vec<Vec<String>> {
+    let mut words_per_sublist: usize;
+    if *amount_of_threads == 15 as usize {
+        *amount_of_threads = 10;
+        words_per_sublist = text.len() / *amount_of_threads + 1;
         words_per_sublist = words_per_sublist - (words_per_sublist % 10)
     } else {
-        let words_per_sublist: usize = text.len() / amount_of_threads;    
+        words_per_sublist = text.len() / *amount_of_threads;    
     }
     let mut words_in_sublist: u32 = 0;
     let mut curr_sublist: usize = 0;
@@ -89,7 +89,7 @@ fn reduce_phase(data: &mut Vec<WordCount>) -> Vec<WordCount> {
 fn number_threads(length_of_text: usize) -> usize {
     let mut result: usize = 0;
     for i in 5..11 {
-        if result % i as usize == 0 {
+        if length_of_text % i as usize == 0 {
             result = i;
         }
     }
@@ -104,8 +104,8 @@ fn main() {
 
     // example text
     let mut divided_text = divide_string_to_vec(read_file("src/test.txt".to_string()));
-    let thread_count: usize = number_threads(divided_text.len());
-    let mut usable_text: Vec<Vec<String>> = divide_for_threading(&mut divided_text, thread_count);
+    let mut thread_count: usize = number_threads(divided_text.len());
+    let mut usable_text: Vec<Vec<String>> = divide_for_threading(&mut divided_text, &mut thread_count);
     
     
     /*********************************************************************************************
