@@ -32,10 +32,7 @@ fn divide_for_threading(text:&mut Vec<String>, amount_of_threads: &mut usize) ->
     }
     let mut words_in_sublist: u32 = 0;
     let mut curr_sublist: usize = 0;
-    let mut result: Vec<Vec<String>> = Vec::new();
-    for _i in 0..result.len() {
-        result.push(vec![]);
-    }
+    let mut result: Vec<Vec<String>> = vec![amount_of_threads; vec![]];
     for _i in 0..text.len() {
         if words_in_sublist > words_per_sublist as u32 {
             words_in_sublist = 0;
